@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Задачи{% endblock %}
+{% block content %}
+    <h2>Редактировать задачу</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Задача</th>
+            <th>Готовность</th>
+            <th>Выполнить до</th>
+        </tr>
+        </thead>
+    <form action="{% url 'task_update' task.pk%}" method="post">
+
+        <tbody>
+            <tr>
+                <td {% if task.status == 'done' %}
+                        class="strike"
+                    {% endif %}><input type='text' name='name' value="{{ task.name }}"></p></td>
+
+                <td>{% if task.status == 'new' %}
+                        <input type='text' name='status' value="{{ task.status }}">
+                    {% elif task.status == 'done' %}
+                        <input type='text' name='status' value="{{ task.status }}">
+                    {% else %}
+                        <input type='text' name='status' value="{{ task.status }}">
+                    {% endif %}</td>
+
+                <td><input type="datetime-local" name="due_date" value="{{ task.due_date }}"></td>
+            </tr>
+        </tbody>
+    </table>
+        {% csrf_token %}
+        <input type="submit" value="Сохранить">
+    </form>
+{% endblock %}
